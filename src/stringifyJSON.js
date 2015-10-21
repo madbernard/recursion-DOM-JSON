@@ -56,7 +56,11 @@ var stringifyJSON = function(obj) {
   }
   // below are collections, need to recurse through them
   if (Array.isArray(obj)) {
+    var storageString = '[';
     var length = obj.length;
+    if (length === 0) {
+      return storageString += ']';
+    }
     //recurse within array case, don't leave until end, because there are different rules here
     //censor undefined, function, and symbol to null
     if (typeof obj === 'undefined' || typeof obj === 'function' || typeof obj === 'symbol') {
