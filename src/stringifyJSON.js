@@ -16,6 +16,8 @@
  * All symbol-keyed properties will be completely ignored, even when using the
  replacer function.
  ===== Doesn't need addressing in this implementation. ES6
+
+// need to address null
  */
 
 // what about other typeof results?
@@ -42,8 +44,10 @@
 // find length, set that as a var, recurse up to that var
 // maybe join an array of the strigied things?
 
-// need to address null
 var stringifyJSON = function(obj) {
+  if (obj === null && typeof obj === 'object') {
+    return 'null';
+  }
   if (typeof obj === 'number' || typeof obj === 'boolean') {
     return obj.toString();
   }
