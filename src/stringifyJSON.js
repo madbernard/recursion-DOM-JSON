@@ -10,10 +10,10 @@
 // starting at Ben's suggestion by getting it to output those when input those
 
 var stringifyJSON = function(obj) {
-  if (typeOf.obj === 'number' || typeOf.obj === 'boolean') {
-    return '"' + obj + '"';
+  if (typeof obj === 'number' || typeof obj === 'boolean') {
+    return obj.toString();
   }
-  if (typeOf.obj === 'string') {
-    return '""' + obj + '""';
+  if (typeof obj === 'string') {
+    return '"' + obj.toString() + '"';
   }
 };
