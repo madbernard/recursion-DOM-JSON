@@ -69,4 +69,9 @@ var stringifyJSON = function(obj) {
     return '[' + toBeJoined.join() + ']';
   }
   // object case
+  var buildStringFromObject = [];
+  for (var key in obj) {
+    buildStringFromObject.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+  }
+  return '{' + buildStringFromObject.join() + '}';
 };
