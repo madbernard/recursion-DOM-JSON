@@ -9,6 +9,15 @@
 
 // starting at Ben's suggestion by getting it to output those when input those
 
+/*  Done things
+ * Boolean, Number, and String objects are converted to the corresponding primitive
+ values during stringification, in accord with the traditional conversion semantics.
+ ===== done?
+ * All symbol-keyed properties will be completely ignored, even when using the
+ replacer function.
+ ===== Doesn't need addressing in this implementation. ES6
+ */
+
 // what about other typeof results?
 // undefined = 'undefined', null = 'object', symbol = 'symbol', function = 'function'
 // everything else = 'object'
@@ -19,26 +28,39 @@
  * Properties of non-array objects are not guaranteed to be stringified in any
  particular order. Do not rely on ordering of properties within the same object
  within the stringification.
- --- Use each
- * Boolean, Number, and String objects are converted to the corresponding primitive
- values during stringification, in accord with the traditional conversion semantics.
- ===== done?
+ --- Use for/in
  * If undefined, a function, or a symbol is encountered during conversion it is
  either omitted (when it is found in an object) or censored to null (when it is found
  in an array).
  --- Set up if statement within if statement
- * All symbol-keyed properties will be completely ignored, even when using the
- replacer function.
- --- Probably doesn't need addressing in this implementation?
  * Non-enumerable properties will be ignored
- --- Use each
-*/
+ --- Use for/in
+ */
+// change tostring prototype to save structural things like {} and null?
 
+// Here's my thought re: recursion doing this
+// find length, set that as a var, recurse up to that var
+// maybe join an array of the strigied things?
+
+// need to address null
 var stringifyJSON = function(obj) {
   if (typeof obj === 'number' || typeof obj === 'boolean') {
     return obj.toString();
   }
   if (typeof obj === 'string') {
     return '"' + obj.toString() + '"';
+  }
+  // below are collections, need to recurse through them
+  if (Array.isArray(obj)) {
+    var length = obj.length;
+    //recurse within array case, don't leave until end, because there are different rules here
+    //censor undefined, function, and symbol to null
+    if (typeof obj === 'undefined' || typeof obj === 'function' || typeof obj === 'symbol') {
+      return null;
+    }
+  }
+  // Array case out of the way, can deal with things to leave out
+  if (typeof obj === 'undefined' || typeof obj === 'function' || typeof obj === 'symbol') {
+    return;
   }
 };
