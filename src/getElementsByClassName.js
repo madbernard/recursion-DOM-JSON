@@ -6,19 +6,8 @@
 // But instead we're going to implement it from scratch:
 
 var getElementsByClassName = function(className, rootNode) {
-  //start at base, get array of children FUNC, recurse into that array,
-  //if at end of branch, check for the class name FUNC, if classname push into subarray return subarray?
-  var finalArray;
 
-  if (!finalArray) {
-    finalArray = [];
-  }
-
-  var arrayOfBranchReturns;
-
-  if (!arrayOfBranchReturns) {
-    arrayOfBranchReturns = [];
-  }
+  var arrayOfBranchReturns = [];
 
   if (!rootNode) {
     rootNode = document.body;
@@ -26,12 +15,12 @@ var getElementsByClassName = function(className, rootNode) {
 
   // if there's nothing in rootNode, end of branch, termination condition
   if (rootNode === null) {
-    return finalArray.push(arrayOfBranchReturns);
+    return;
   }
 
-    if ($(rootNode).hasClass(className)) {
-      arrayOfBranchReturns.push(rootNode);
-    }
+  if ($(rootNode).hasClass(className)) {
+    arrayOfBranchReturns.push(rootNode);
+  }
 
   var $kids = $(rootNode).children();
 
@@ -41,10 +30,11 @@ var getElementsByClassName = function(className, rootNode) {
       arrayOfBranchReturns.push($kids[i]);
     }
     //go deeper
-    getElementsByClassName(className, $kids.eq(i));
+    var holder = getElementsByClassName(className, $kids.eq(i));
+    arrayOfBranchReturns = arrayOfBranchReturns.concat(holder);
   }
 
-  return finalArray;//array.concat stuff to make it flat
+  return arrayOfBranchReturns;
 };
 
 console.log(getElementsByClassName('foo'));
